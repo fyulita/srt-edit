@@ -1,4 +1,4 @@
-from format import clearFormat
+from formatting import clearFormat
 
 
 # Takes time and delay and returns new time with the delay added 

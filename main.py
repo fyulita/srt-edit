@@ -1,7 +1,7 @@
 import argparse
 import os
 from shift import shift
-from format import formatting
+from formatting import formatting
 
 
 parser = argparse.ArgumentParser(prog="srt-edit", description="A simple tool to adjust .srt subtitles to video.")
