@@ -1,3 +1,6 @@
+from format import clearFormat
+
+
 # Takes time and delay and returns new time with the delay added 
 def addDelay(time, delay):
     hour = int(time[0:2])
@@ -27,14 +30,14 @@ def addDelay(time, delay):
 
 
 # Creates new file equal to file with all times shifted by delay
-def shift(file, delay):
+def shift(file, delay, no_format):
     reader = open(file, "r")
     lines = reader.readlines()
-    writer = open(file[:-3] + "synced.srt", "w")
+    writer = open(file[:-13] + ".srt", "w")
     
     line_counter = 0
     while line_counter < len(lines):
-        # Write dialogue counter
+        # Write sequence number
         writer.write(lines[line_counter])
         line_counter += 1
     
@@ -51,8 +54,14 @@ def shift(file, delay):
         line_counter += 1
     
         # Now we are in the dialogue part. We just want to copy these lines until we get to the next counter.
+        # If we also want to clear formatting then we will do so here to save time.
         while line_counter < len(lines) and not lines[line_counter][:-1].isdigit():
-            writer.write(lines[line_counter])
+            if no_format:
+                new_line = clearFormat(lines[line_counter])
+                writer.write(new_line)
+            else:
+                writer.write(lines[line_counter])
+
             line_counter += 1
     
     reader.close()

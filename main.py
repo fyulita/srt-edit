@@ -1,6 +1,7 @@
 import argparse
+import os
 from shift import shift
-from format import clearFormat
+from format import formatting
 
 
 parser = argparse.ArgumentParser(prog="srt-edit", description="A simple tool to adjust .srt subtitles to video.")
@@ -18,7 +19,11 @@ delay = args.shift
 if file[-4:] != ".srt":
     print(f"srt-edit: error: argument -f/--file: invalid .srt file: '{file}'")
 else:
-    if no_format:
-        clearFormat(file)
+    original_file = file[:-4] + ".original.srt"
+    os.rename(file, original_file)
     if not delay is None:
-        shift(file, delay)
+        shift(original_file, delay, no_format)
+    elif no_format:
+        formatting(original_file)
+    else:
+        print(f"srt-edit: error: no instruction given")
