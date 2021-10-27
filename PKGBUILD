@@ -19,5 +19,5 @@ pkgver() {
 package() {
     cd "$pkgname"
     install -Dm755 srt_edit.py "$pkgdir/usr/bin/$pkgname"
-    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
 }

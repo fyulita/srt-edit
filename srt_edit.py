@@ -35,7 +35,7 @@ def main():
         if not delay is None or clear_format:
             edit(original_file, delay, clear_format)
         else:
-            print(f"srt-edit: error: no instruction given")
+            print("srt-edit: error: no instruction given")
 
 
 # Main loop to read original file and write a new one with all the changes
@@ -95,17 +95,32 @@ def addDelay(time, delay):
     new_second = second
     new_milli = milli + delay
     
-    if new_milli >= 1000:
+    while new_milli >= 1000:
         new_milli -= 1000
         new_second += 1
 
-    if new_second >= 60:
+    while new_milli < 0:
+        new_milli += 1000
+        new_second -= 1
+
+    while new_second >= 60:
         new_second -= 60
         new_minute += 1
 
-    if new_minute >= 60:
+    while new_second < 0:
+        new_second += 60
+        new_minute -= 1
+
+    while new_minute >= 60:
         new_minute -= 60
         new_hour += 1
+
+    while new_minute < 0:
+        new_minute += 60
+        new_hour -= 1
+
+    if new_hour < 0:
+        print("srt-edit: error: negative time introduced.")
 
     new_time = f"{new_hour:02}" + ":" + f"{new_minute:02}" + ":" + f"{new_second:02}" + "," + f"{new_milli:03}"
     return new_time
