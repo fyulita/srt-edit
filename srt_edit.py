@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+"""
+  srt-edit - (c) Federico Yulita 2021
+  Licensed under GPLv3.0
+"""
+
 import argparse
 import os
 
